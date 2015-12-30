@@ -3,7 +3,7 @@ from subprocess import check_output
 from os import system
 import actions
 
-version=0.2
+version=0.3
 class MainWindow(Gtk.Window):
 	def __init__(self):
 
@@ -12,7 +12,7 @@ class MainWindow(Gtk.Window):
 		
 		# Boxes
 		# Main box - holds everything
-		self.mainbox = Gtk.VBox(spacing = 12)
+		self.mainbox = Gtk.VBox(spacing = 6)
 		self.add(self.mainbox)		
 
 		# Button box - holds clickables
@@ -24,12 +24,12 @@ class MainWindow(Gtk.Window):
 		self.mainbox.add(self.timebox)
 
 		# Track box - holds track info
-		self.trackbox = Gtk.HBox(spacing = 4)
+		self.trackbox = Gtk.HBox(spacing = 8)
 		self.mainbox.add(self.trackbox)
 
 		# Progress bar
 		self.prog = Gtk.ProgressBar()
-		self.timeout_prog = GObject.timeout_add(500, self.timeout, None)
+		self.timeout_prog = GObject.timeout_add(1000, self.timeout, None)
 				
 		# Buttons
 		self.next = Gtk.Button(label="next")
@@ -43,7 +43,7 @@ class MainWindow(Gtk.Window):
 
 		# Labels (artist, title and time)
 		self.artist = Gtk.Label("bar")
-		self.song = Gtk.Label()
+		self.song = Gtk.Label("song")
 		self.tt = Gtk.Label()
 		self.ct = Gtk.Label()		
 
@@ -56,9 +56,10 @@ class MainWindow(Gtk.Window):
 		self.timebox.pack_end(self.tt, True, True, 0)
 
 		self.trackbox.pack_start(self.artist, True, True, 0)
-#		self.trackbox.pack_start(self.song, True, True, 0)
+		self.trackbox.pack_start(self.song, True, True, 0)
 
 		self.mainbox.pack_start(self.prog, True, True, 0)
+
 		
 	def timeout(self, data):
 		new_value = float(check_output(('mocp', '-Q', '%cs')))/float(check_output(('mocp', '-Q', '%ts')))
@@ -66,12 +67,16 @@ class MainWindow(Gtk.Window):
 
 		# set title, artist and time
 		try:
+
+			self.song.set_text(check_output(('mocp', '-Q', '%song'))[:-1])
 			self.ct.set_text( check_output(('mocp', '-Q', '%ct'))[:-1] )
 			self.tt.set_text( check_output(('mocp', '-Q', '%tt'))[:-1] )
 			self.artist.set_text( check_output(('mocp', '-Q', '%artist'))[:-1] )
+
+		# Life is too short to catch exceptions
 		except:
 			pass
-#		self.song.set_text( check_output(('mocp', '-Q', '%song'))[:-1] )
+
 		return True
 	
 
