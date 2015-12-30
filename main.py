@@ -62,9 +62,11 @@ class MainWindow(Gtk.Window):
 
 		
 	def timeout(self, data):
-		new_value = float(check_output(('mocp', '-Q', '%cs')))/float(check_output(('mocp', '-Q', '%ts')))
-		self.prog.set_fraction(new_value)
-
+		try:
+			new_value = float(check_output(('mocp', '-Q', '%cs')))/float(check_output(('mocp', '-Q', '%ts')))
+			self.prog.set_fraction(new_value)
+		except:
+			pass
 		# set title, artist and time
 		try:
 
