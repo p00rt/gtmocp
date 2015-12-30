@@ -21,7 +21,7 @@ class MainWindow(Gtk.Window):
 		
 		# Time box - holds time info
 		self.timebox = Gtk.HBox(spacing = 4)
-		self.mainbox.add(self.timebox)
+	m,,	self.mainbox.add(self.timebox)
 
 		# Track box - holds track info
 		self.trackbox = Gtk.HBox(spacing = 4)
