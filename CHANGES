@@ -2,4 +2,4 @@ v. 0.1 - initial commit
 
 v. 0.2 - added artist name, current time and total time
 
-TODO: fix changing track name hanging whole program
+v. 0.3 - added track title info, made program look better
